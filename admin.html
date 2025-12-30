@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访客统计 - 个人网站</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 统计页面特有样式 */
+        .admin-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #E8F4F8 0%, #F5F7FA 100%);
+            padding: 2rem 0;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--white);
+            box-shadow: 0 2px 10px var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .admin-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-nav a {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .section {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .section-body {
+            padding: 2rem;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-top: 1.5rem;
+        }
+        
+        .visitors-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .visitors-table th,
+        .visitors-table td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .visitors-table th {
+            background-color: var(--background-color);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .visitors-table tr:hover {
+            background-color: #F9F9F9;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .btn-search {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-search:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--white);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination .active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+        
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #ff4444;
+        }
+        
+        /* 简单的图表样式 */
+        .chart-bar {
+            height: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            margin-top: 0.5rem;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .chart-bar-label {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .chart-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .chart-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .visitors-table {
+                font-size: 0.9rem;
+            }
+            
+            .visitors-table th,
+            .visitors-table td {
+                padding: 0.5rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">访客统计管理</h1>
+            <div class="admin-nav">
+                <a href="/index.html">返回网站</a>
+                <a href="/logout" id="logoutBtn">退出登录</a>
+            </div>
+        </div>
+        
+        <div class="container">
+            <!-- 统计卡片 -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalVisitors">-</div>
+                    <div class="stat-label">总访客数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="todayVisitors">-</div>
+                    <div class="stat-label">今日访客</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="recentVisitors">-</div>
+                    <div class="stat-label">近7日访客</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avgVisitors">-</div>
+                    <div class="stat-label">日均访问量</div>
+                </div>
+            </div>
+            
+            <!-- 访客趋势图 -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">近7日访客趋势</h2>
+                </div>
+                <div class="section-body">
+                    <div id="chartContainer" class="chart-container">
+                        <div class="loading">加载中...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 今日访客详情 -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">今日访客详情</h2>
+                </div>
+                <div class="section-body">
+                    <div id="todayVisitorsList" class="loading">加载中...</div>
+                </div>
+            </div>
+            
+            <!-- 所有访客记录 -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">所有访客记录</h2>
+                </div>
+                <div class="section-body">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" class="search-input" placeholder="搜索姓名或手机号...">
+                        <button id="searchBtn" class="btn-search">搜索</button>
+                    </div>
+                    
+                    <div id="visitorsTableContainer">
+                        <div class="loading">加载中...</div>
+                    </div>
+                    
+                    <div id="paginationContainer" class="pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 当前页面状态
+        let currentPage = 1;
+        const pageSize = 10;
+        let searchKeyword = '';
+        let totalPages = 1;
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 检查登录状态
+            checkLoginStatus();
+            
+            // 加载数据
+            loadStats();
+            loadVisitors();
+            
+            // 绑定事件
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+        });
+        
+        // 检查管理员登录状态
+        async function checkLoginStatus() {
+            const adminInfo = localStorage.getItem('adminInfo');
+            
+            if (!adminInfo) {
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            try {
+                const { token } = JSON.parse(adminInfo);
+                
+                // 验证管理员token是否有效
+                const response = await fetch('/api/admin/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token })
+                });
+                
+                if (!response.ok) {
+                    localStorage.removeItem('adminInfo');
+                    window.location.href = '/login.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('验证管理员登录状态失败:', error);
+                localStorage.removeItem('adminInfo');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.data;
+                    
+                    // 更新统计卡片
+                    document.getElementById('totalVisitors').textContent = data.totalVisitors;
+                    document.getElementById('todayVisitors').textContent = data.todayVisitors;
+                    document.getElementById('recentVisitors').textContent = data.recentVisitorsCount;
+                    document.getElementById('avgVisitors').textContent = data.averageVisitsPerDay;
+                    
+                    // 渲染图表
+                    renderChart(data.dailyStats);
+                    
+                    // 渲染今日访客详情
+                    renderTodayVisitors(data.todayVisitorDetails);
+                } else {
+                    throw new Error(result.message || '获取统计数据失败');
+                }
+            } catch (error) {
+                console.error('加载统计数据失败:', error);
+                showError('加载统计数据失败: ' + error.message);
+            }
+        }
+        
+        // 渲染图表
+        function renderChart(dailyStats) {
+            const container = document.getElementById('chartContainer');
+            
+            if (!dailyStats || dailyStats.length === 0) {
+                container.innerHTML = '<div class="no-data">暂无数据</div>';
+                return;
+            }
+            
+            // 找出最大值，用于计算比例
+            const maxValue = Math.max(...dailyStats.map(item => item.count));
+            
+            // 创建图表
+            const chartHtml = dailyStats.map(item => {
+                const percentage = maxValue > 0 ? (item.count / maxValue) * 100 : 0;
+                const dateStr = new Date(item.date).toLocaleDateString('zh-CN', { 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                
+                return `
+                    <div class="chart-item">
+                        <div class="chart-label">${dateStr}: ${item.count}人</div>
+                        <div class="chart-bar" style="width: ${percentage}%">
+                            ${item.count > 0 ? `<span class="chart-bar-label">${item.count}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = chartHtml;
+        }
+        
+        // 渲染今日访客详情
+        function renderTodayVisitors(visitors) {
+            const container = document.getElementById('todayVisitorsList');
+            
+            if (!visitors || visitors.length === 0) {
+                container.innerHTML = '<div class="no-data">今日暂无访客</div>';
+                return;
+            }
+            
+            const tableHtml = `
+                <table class="visitors-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>访问时间</th>
+                            <th>访问次数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${visitors.map(visitor => `
+                            <tr>
+                                <td>${visitor.name}</td>
+                                <td>${new Date(visitor.lastVisit).toLocaleString('zh-CN')}</td>
+                                <td>${visitor.visitCount}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHtml;
+        }
+        
+        // 加载访客记录
+        async function loadVisitors(page = currentPage, search = searchKeyword) {
+            try {
+                const response = await fetch(`/api/visitors?page=${page}&limit=${pageSize}&search=${encodeURIComponent(search)}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const { visitors, pagination } = result.data;
+                    
+                    // 更新分页状态
+                    currentPage = pagination.currentPage;
+                    totalPages = pagination.totalPages;
+                    
+                    // 渲染表格
+                    renderVisitorsTable(visitors);
+                    
+                    // 渲染分页
+                    renderPagination();
+                } else {
+                    throw new Error(result.message || '获取访客记录失败');
+                }
+            } catch (error) {
+                console.error('加载访客记录失败:', error);
+                showError('加载访客记录失败: ' + error.message);
+            }
+        }
+        
+        // 渲染访客表格
+        function renderVisitorsTable(visitors) {
+            const container = document.getElementById('visitorsTableContainer');
+            
+            if (!visitors || visitors.length === 0) {
+                container.innerHTML = '<div class="no-data">暂无访客记录</div>';
+                return;
+            }
+            
+            const tableHtml = `
+                <table class="visitors-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>手机号</th>
+                            <th>首次访问</th>
+                            <th>最后访问</th>
+                            <th>访问次数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${visitors.map(visitor => `
+                            <tr>
+                                <td>${visitor.name}</td>
+                                <td>${maskPhone(visitor.phone)}</td>
+                                <td>${new Date(visitor.firstVisit).toLocaleDateString('zh-CN')}</td>
+                                <td>${new Date(visitor.lastVisit).toLocaleString('zh-CN')}</td>
+                                <td>${visitor.visitCount}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHtml;
+        }
+        
+        // 渲染分页
+        function renderPagination() {
+            const container = document.getElementById('paginationContainer');
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let paginationHtml = `
+                <button ${currentPage === 1 ? 'disabled' : ''} onclick="loadVisitors(${currentPage - 1}, '${searchKeyword}')">上一页</button>
+            `;
+            
+            // 显示页码
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    paginationHtml += `
+                        <button ${i === currentPage ? 'class="active"' : ''} onclick="loadVisitors(${i}, '${searchKeyword}')">${i}</button>
+                    `;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    paginationHtml += `<span>...</span>`;
+                }
+            }
+            
+            paginationHtml += `
+                <button ${currentPage === totalPages ? 'disabled' : ''} onclick="loadVisitors(${currentPage + 1}, '${searchKeyword}')">下一页</button>
+            `;
+            
+            container.innerHTML = paginationHtml;
+        }
+        
+        // 执行搜索
+        function performSearch() {
+            searchKeyword = document.getElementById('searchInput').value.trim();
+            currentPage = 1; // 重置到第一页
+            loadVisitors(currentPage, searchKeyword);
+        }
+        
+        // 手机号脱敏
+        function maskPhone(phone) {
+            if (!phone || phone.length !== 11) return phone;
+            return phone.substring(0, 3) + '*****' + phone.substring(8);
+        }
+        
+        // 退出管理员登录
+        function logout() {
+            if (confirm('确定要退出管理员登录吗？')) {
+                localStorage.removeItem('adminInfo');
+                window.location.href = '/login.html';
+            }
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            console.error(message);
+            // 这里可以添加更友好的错误提示
+            const containers = [
+                document.getElementById('chartContainer'),
+                document.getElementById('todayVisitorsList'),
+                document.getElementById('visitorsTableContainer')
+            ];
+            
+            containers.forEach(container => {
+                if (container) {
+                    container.innerHTML = `<div class="error">${message}</div>`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

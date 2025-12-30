@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 刘力菲的个人网站</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 登录页面特有样式 */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #E8F4F8 0%, #F5F7FA 100%);
+            padding: 2rem;
+        }
+        
+        .login-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(74, 144, 226, 0.15);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .login-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-title {
+            color: var(--text-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        /* 登录选项卡样式 */
+        .login-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .login-tab {
+            flex: 1;
+            padding: 1rem 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .login-tab.active {
+            color: var(--primary-color);
+        }
+        
+        .login-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .login-tab:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-group label {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .form-input {
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-family);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        
+        .btn-login {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            background-color: var(--primary-color);
+            color: var(--white);
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn-login:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-message {
+            margin-top: 1.5rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .login-message.error {
+            background-color: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+        
+        .login-message.success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .login-footer {
+            margin-top: 2rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .visitor-badge {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+        
+        .admin-badge {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+        
+        /* 加载动画 */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 手机适配 */
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .login-title {
+                font-size: 1.8rem;
+            }
+            
+            .login-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-icon">🔐</div>
+            <h1 class="login-title">欢迎访问个人网站</h1>
+            <p class="login-subtitle">请选择您的身份并登录以继续访问</p>
+            
+            <div class="login-tabs">
+                <button class="login-tab active" id="visitorTab" onclick="switchTab('visitor')">
+                    访客登录
+                    <span class="badge visitor-badge">推荐</span>
+                </button>
+                <button class="login-tab" id="adminTab" onclick="switchTab('admin')">
+                    管理员登录
+                </button>
+            </div>
+            
+            <!-- 访客登录表单 -->
+            <div id="visitorLogin" class="tab-content active">
+                <form id="visitorLoginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="visitorName">姓名 *</label>
+                        <input type="text" id="visitorName" name="visitorName" class="form-input" required placeholder="请输入您的姓名">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="visitorPhone">手机号码 *</label>
+                        <input type="tel" id="visitorPhone" name="visitorPhone" class="form-input" required placeholder="请输入您的手机号码" pattern="^1[3-9]\d{9}$">
+                    </div>
+                    
+                    <button type="submit" id="visitorLoginBtn" class="btn-login">
+                        访客登录
+                    </button>
+                </form>
+            </div>
+            
+            <!-- 管理员登录表单 -->
+            <div id="adminLogin" class="tab-content">
+                <form id="adminLoginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="adminPhone">管理员手机号 *</label>
+                        <input type="tel" id="adminPhone" name="adminPhone" class="form-input" required placeholder="请输入管理员手机号">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adminPassword">密码 *</label>
+                        <input type="password" id="adminPassword" name="adminPassword" class="form-input" required placeholder="请输入管理员密码">
+                    </div>
+                    
+                    <button type="submit" id="adminLoginBtn" class="btn-login">
+                        管理员登录
+                    </button>
+                </form>
+            </div>
+            
+            <div id="loginMessage" class="login-message"></div>
+            
+            <div class="login-footer">
+                您的信息将被安全保存，仅用于访客统计
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换登录选项卡
+        function switchTab(tabType) {
+            // 移除所有活动状态
+            document.querySelectorAll('.login-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 激活选中的选项卡
+            if (tabType === 'visitor') {
+                document.getElementById('visitorTab').classList.add('active');
+                document.getElementById('visitorLogin').classList.add('active');
+            } else {
+                document.getElementById('adminTab').classList.add('active');
+                document.getElementById('adminLogin').classList.add('active');
+            }
+            
+            // 清除错误和成功消息
+            hideMessage();
+        }
+        
+        // 显示消息
+        function showMessage(text, type) {
+            const loginMessage = document.getElementById('loginMessage');
+            loginMessage.textContent = text;
+            loginMessage.className = `login-message ${type}`;
+            loginMessage.style.display = 'block';
+            
+            // 5秒后自动隐藏
+            setTimeout(() => {
+                hideMessage();
+            }, 5000);
+        }
+        
+        // 隐藏消息
+        function hideMessage() {
+            const loginMessage = document.getElementById('loginMessage');
+            loginMessage.style.display = 'none';
+        }
+        
+        // 登录表单处理
+        document.addEventListener('DOMContentLoaded', () => {
+            // 检查是否已登录
+            checkLoginStatus();
+            
+            // 访客登录表单提交处理
+            document.getElementById('visitorLoginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('visitorName').value.trim();
+                const phone = document.getElementById('visitorPhone').value.trim();
+                const loginBtn = document.getElementById('visitorLoginBtn');
+                
+                // 简单验证
+                if (!name) {
+                    showMessage('请输入您的姓名', 'error');
+                    return;
+                }
+                
+                if (!phone) {
+                    showMessage('请输入您的手机号码', 'error');
+                    return;
+                }
+                
+                if (!/^1[3-9]\d{9}$/.test(phone)) {
+                    showMessage('请输入有效的手机号码', 'error');
+                    return;
+                }
+                
+                // 显示加载状态
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<span class="spinner"></span>正在登录...';
+                
+                try {
+                    // 发送登录请求到后端
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, phone })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        console.log('访客登录成功，准备跳转', data);
+                        
+                        // 登录成功，保存登录状态
+                        localStorage.setItem('visitorInfo', JSON.stringify({
+                            name,
+                            phone,
+                            loginTime: Date.now(),
+                            token: data.token
+                        }));
+                        
+                        showMessage('登录成功，即将跳转...', 'success');
+                        
+                        // 跳转到原网站
+                        setTimeout(() => {
+                            // 保存token到sessionStorage，确保原网站可以获取
+                            sessionStorage.setItem('authToken', data.token);
+                            console.log('即将跳转到原网站');
+                            window.location.href = '/index.html';
+                        }, 1500);
+                    } else {
+                        console.log('访客登录失败', data);
+                        showMessage(data.message || '登录失败，请重试', 'error');
+                    }
+                } catch (error) {
+                    console.error('访客登录请求错误:', error);
+                    showMessage('网络错误，请检查网络连接', 'error');
+                } finally {
+                    // 恢复按钮状态
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '访客登录';
+                }
+            });
+            
+            // 管理员登录表单提交处理
+            document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const phone = document.getElementById('adminPhone').value.trim();
+                const password = document.getElementById('adminPassword').value.trim();
+                const loginBtn = document.getElementById('adminLoginBtn');
+                
+                // 简单验证
+                if (!phone) {
+                    showMessage('请输入管理员手机号', 'error');
+                    return;
+                }
+                
+                if (!password) {
+                    showMessage('请输入管理员密码', 'error');
+                    return;
+                }
+                
+                // 显示加载状态
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<span class="spinner"></span>正在登录...';
+                
+                try {
+                    // 发送管理员登录请求到后端
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ phone, password })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // 登录成功，保存登录状态
+                        localStorage.setItem('adminInfo', JSON.stringify({
+                            phone,
+                            loginTime: Date.now(),
+                            token: data.token
+                        }));
+                        
+                        showMessage('管理员登录成功，即将跳转...', 'success');
+                        
+                        // 跳转到管理页面
+                        setTimeout(() => {
+                            window.location.href = '/admin.html';
+                        }, 1500);
+                    } else {
+                        showMessage(data.message || '登录失败，请重试', 'error');
+                    }
+                } catch (error) {
+                    console.error('管理员登录请求错误:', error);
+                    showMessage('网络错误，请检查网络连接', 'error');
+                } finally {
+                    // 恢复按钮状态
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '管理员登录';
+                }
+            });
+            
+            // 检查登录状态
+            async function checkLoginStatus() {
+                const visitorInfo = localStorage.getItem('visitorInfo');
+                const adminInfo = localStorage.getItem('adminInfo');
+                
+                if (visitorInfo) {
+                    try {
+                        const { token } = JSON.parse(visitorInfo);
+                        
+                        // 验证访客token是否有效
+                        const response = await fetch('/api/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ token })
+                        });
+                        
+                        if (response.ok) {
+                            // 已登录，直接跳转到主页
+                            window.location.href = '/index.html';
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('验证访客登录状态失败:', error);
+                    }
+                    
+                    // token无效，清除本地存储
+                    localStorage.removeItem('visitorInfo');
+                }
+                
+                if (adminInfo) {
+                    try {
+                        const { token } = JSON.parse(adminInfo);
+                        
+                        // 验证管理员token是否有效
+                        const response = await fetch('/api/admin/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ token })
+                        });
+                        
+                        if (response.ok) {
+                            // 已登录，直接跳转到管理页面
+                            window.location.href = '/admin.html';
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('验证管理员登录状态失败:', error);
+                    }
+                    
+                    // token无效，清除本地存储
+                    localStorage.removeItem('adminInfo');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

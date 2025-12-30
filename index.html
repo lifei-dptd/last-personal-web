@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘力菲的个人网站</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 登录检查遮罩 -->
+    <div id="loginCheckOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: 15px; text-align: center; max-width: 400px;">
+            <h3 style="margin-top: 0;">验证登录状态</h3>
+            <p>正在验证您的登录状态，请稍候...</p>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">刘力菲</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">首页</a></li>
+                <li><a href="#about" class="nav-link">关于我</a></li>
+                <li><a href="#skills" class="nav-link">技能分析</a></li>
+                <li><a href="#timeline" class="nav-link">求学经历</a></li>
+                <li><a href="#hobbies" class="nav-link">兴趣爱好</a></li>
+                <li><a href="#gallery" class="nav-link">照片墙</a></li>
+                <li><a href="#contact" class="nav-link">联系方式</a></li>
+                <li><a href="#guestbook" class="nav-link">留言板</a></li>
+                <li id="userMenu" style="position: relative;">
+                    <a href="/login.html" id="loginLink" class="nav-link">登录</a>
+                    <div id="userDropdown" style="display: none; position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); padding: 1rem; min-width: 200px; z-index: 1000;">
+                        <div id="welcomeText" style="padding: 0.5rem 0; color: var(--text-color); font-weight: 600;"></div>
+                        <hr style="border: none; border-top: 1px solid #eee; margin: 0.5rem 0;">
+                        <a href="javascript:void(0)" onclick="logout()" style="display: block; padding: 0.5rem 0; color: var(--text-color); text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#4A90E2'" onmouseout="this.style.color='var(--text-color)'">退出登录</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页部分 -->
+    <section id="home" class="section active">
+        <div class="container">
+            <div class="home-content">
+                <h1 class="home-title">
+                    你好，我是<span class="highlight">刘力菲</span>
+                </h1>
+                <h2 class="home-subtitle">武汉理工大学 · 智能经济专业</h2>
+                <p class="home-description">
+                    我是一名19岁的大学生，对数字经济和AI在经济中的应用充满热情。
+                    我擅长数据分析、商业分析和逻辑思维，对新技术、新经济模式保持敏锐的观察力。
+                </p>
+                <div class="home-buttons">
+                    <a href="#about" class="btn btn-primary">了解更多</a>
+                    <a href="#contact" class="btn btn-secondary">联系我</a>
+                </div>
+                <div class="home-image">
+                    <div class="floating-card">
+                        <div class="card-icon">🎓</div>
+                        <h3>智能经济</h3>
+                        <p>探索AI与经济的结合</p>
+                    </div>
+                    <div class="floating-card">
+                        <div class="card-icon">📊</div>
+                        <h3>数据分析</h3>
+                        <p>用数据洞察经济趋势</p>
+                    </div>
+                    <div class="floating-card">
+                        <div class="card-icon">🌐</div>
+                        <h3>数字经济</h3>
+                        <p>研究新经济模式</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我部分 -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <p class="section-subtitle">了解我的基本信息和专业背景</p>
+            
+            <div class="about-content">
+                <div class="about-card">
+                    <div class="about-icon">👤</div>
+                    <h3>个人信息</h3>
+                    <ul class="info-list">
+                        <li><strong>姓名：</strong>刘力菲</li>
+                        <li><strong>年龄：</strong>19岁</li>
+                        <li><strong>学校：</strong>武汉理工大学</li>
+                        <li><strong>专业：</strong>智能经济</li>
+                    </ul>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">🎯</div>
+                    <h3>专业方向</h3>
+                    <ul class="info-list">
+                        <li><strong>研究领域：</strong>数字经济</li>
+                        <li><strong>兴趣方向：</strong>AI在经济中的应用</li>
+                        <li><strong>学习重点：</strong>平台经济</li>
+                        <li><strong>发展目标：</strong>成为经济分析师</li>
+                    </ul>
+                </div>
+                
+                <div class="about-card">
+                    <div class="about-icon">📧</div>
+                    <h3>联系方式</h3>
+                    <ul class="info-list">
+                        <li><strong>邮箱：</strong>lifeiliu68@gmail.com</li>
+                        <li><strong>地址：</strong>湖北武汉</li>
+                        <li><strong>状态：</strong>在读本科</li>
+                        <li><strong>时间：</strong>随时欢迎交流</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能分析部分 -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">技能分析</h2>
+            <p class="section-subtitle">我的专业技能和学习能力</p>
+            
+            <div class="skills-grid">
+                <div class="skill-card" onclick="openSkillDetail('data-analysis')">
+                    <div class="skill-icon">🐍</div>
+                    <h3>数据分析与经济建模</h3>
+                    <p>掌握Python编程基础，能够进行数据清洗、分析和可视化。熟练使用Excel进行数据处理和基础统计分析，具备经济建模的基本能力。</p>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Excel</span>
+                        <span class="tag">数据分析</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+                
+                <div class="skill-card" onclick="openSkillDetail('ai-economics')">
+                    <div class="skill-icon">🤖</div>
+                    <h3>AI在经济中的应用</h3>
+                    <p>理解人工智能技术在经济学与商业领域的应用场景，包括预测分析、智能推荐、自动化决策等，能够从经济角度评估AI技术的价值。</p>
+                    <div class="skill-tags">
+                        <span class="tag">人工智能</span>
+                        <span class="tag">预测分析</span>
+                        <span class="tag">自动化决策</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+                
+                <div class="skill-card" onclick="openSkillDetail('digital-economy')">
+                    <div class="skill-icon">🌐</div>
+                    <h3>数字经济与平台经济</h3>
+                    <p>熟悉数字经济的基本理论和发展趋势，了解平台经济的商业模式和运行机制，能够分析新兴经济形态的特点和影响。</p>
+                    <div class="skill-tags">
+                        <span class="tag">数字经济</span>
+                        <span class="tag">平台经济</span>
+                        <span class="tag">商业模式</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+                
+                <div class="skill-card" onclick="openSkillDetail('business-analysis')">
+                    <div class="skill-icon">💼</div>
+                    <h3>商业分析与逻辑思维</h3>
+                    <p>具备良好的商业分析能力，能够运用逻辑思维分析复杂的经济问题，识别关键因素，提出合理的解决方案。</p>
+                    <div class="skill-tags">
+                        <span class="tag">商业分析</span>
+                        <span class="tag">逻辑思维</span>
+                        <span class="tag">问题解决</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+                
+                <div class="skill-card" onclick="openSkillDetail('information-collection')">
+                    <div class="skill-icon">📚</div>
+                    <h3>信息收集与报告撰写</h3>
+                    <p>擅长信息收集、数据整理和报告撰写，能够从多个渠道获取信息，进行系统化整理，并以清晰的方式呈现分析结果。</p>
+                    <div class="skill-tags">
+                        <span class="tag">信息收集</span>
+                        <span class="tag">报告撰写</span>
+                        <span class="tag">数据分析</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+                
+                <div class="skill-card" onclick="openSkillDetail('learning-ability')">
+                    <div class="skill-icon">🚀</div>
+                    <h3>学习能力</h3>
+                    <p>对新技术、新经济模式保持敏锐的观察力和强烈的学习兴趣，能够快速适应变化，持续更新知识结构。</p>
+                    <div class="skill-tags">
+                        <span class="tag">快速学习</span>
+                        <span class="tag">适应能力</span>
+                        <span class="tag">知识更新</span>
+                    </div>
+                    <div class="skill-view-btn">查看详情 →</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 求学经历部分 -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2 class="section-title">求学经历</h2>
+            <p class="section-subtitle">我的学习历程和成长轨迹</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024 - 至今</div>
+                        <h3>武汉理工大学</h3>
+                        <div class="timeline-type">本科学习</div>
+                        <p class="timeline-description">
+                            在武汉理工大学智能经济专业学习，系统学习经济学理论和数据分析方法。
+                            参与多个数字经济相关项目研究，深入了解AI技术在经济领域的应用。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2021 - 2024</div>
+                        <h3>宜昌市夷陵中学</h3>
+                        <div class="timeline-type">高中阶段</div>
+                        <p class="timeline-description">
+                            在宜昌市夷陵中学全面发展，积极参与各类学科竞赛和社团活动。
+                            培养了良好的学习习惯和团队协作能力，为大学专业学习打下坚实基础。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018 - 2021</div>
+                        <h3>宜昌市金东方初级中学</h3>
+                        <div class="timeline-type">初中阶段</div>
+                        <p class="timeline-description">
+                            在宜昌市金东方初级中学对经济学和计算机科学产生浓厚兴趣。
+                            开始自学编程基础和经济学入门知识，培养了自学能力和创新思维。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 兴趣爱好部分 -->
+    <section id="hobbies" class="section">
+        <div class="container">
+            <h2 class="section-title">兴趣爱好</h2>
+            <p class="section-subtitle">学习之余的精彩生活</p>
+            
+            <div class="hobbies-content">
+                <div class="hobby-card">
+                    <div class="hobby-image">🏃‍♂️</div>
+                    <h3>运动健身</h3>
+                    <p>喜欢跑步、游泳等有氧运动，保持良好的身体素质。运动让我保持活力，提高学习效率，也是释放压力的好方式。</p>
+                    <button class="btn-view-photos" onclick="toggleTravelPhotos()">
+                        <span class="btn-icon">📷</span>
+                        查看运动照片
+                    </button>
+                    <div id="travelPhotosSection" class="travel-photos-section" style="display: none;">
+                        <div class="travel-photos-header">
+                            <h3>运动照片</h3>
+                            <button class="btn-close-photos" onclick="toggleTravelPhotos()">×</button>
+                        </div>
+                        <div class="travel-upload-area" id="travelUploadArea">
+                            <div class="travel-upload-content">
+                                <div class="travel-upload-icon">📤</div>
+                                <h3>上传运动照片</h3>
+                                <p>点击或拖拽文件到此处上传</p>
+                                <p class="travel-upload-hint">支持 JPG、PNG、GIF 格式，单个文件最大 5MB</p>
+                                <button type="button" class="btn btn-primary" onclick="document.getElementById('travelFileInput').click()">选择文件</button>
+                                <input type="file" id="travelFileInput" style="display: none;" accept="image/*" multiple>
+                            </div>
+                        </div>
+                        <div class="travel-photos-grid" id="travelPhotosGrid">
+                            <div class="travel-photos-empty" id="travelPhotosEmpty">还没有照片，快来上传第一张吧！</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hobby-card">
+                    <div class="hobby-image">🎮</div>
+                    <h3>游戏娱乐</h3>
+                    <p>喜欢各类游戏，从策略游戏到动作冒险都有涉猎。游戏不仅是一种娱乐，也是一种思维训练和社交方式。</p>
+                    <button class="btn-view-photos" onclick="toggleAnimeCollection()">
+                        <span class="btn-icon">🎨</span>
+                        游戏收藏
+                    </button>
+                    <div id="animeCollectionSection" class="anime-collection-section" style="display: none;">
+                        <div class="anime-collection-header">
+                            <h3>游戏收藏</h3>
+                            <button class="btn-close-photos" onclick="toggleAnimeCollection()">×</button>
+                        </div>
+                        <div class="anime-add-area">
+                            <div class="anime-add-content">
+                                <h4>添加游戏收藏</h4>
+                                <div class="anime-form">
+                                    <div class="form-group">
+                                        <label for="animeTypeInput">游戏类型/名称</label>
+                                        <input type="text" id="animeTypeInput" class="form-input" placeholder="例如：RPG、策略、射击等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>游戏截图</label>
+                                        <div class="anime-upload-area" id="animeUploadArea">
+                                            <div class="anime-upload-content">
+                                                <div class="anime-upload-icon">📤</div>
+                                                <p>点击或拖拽游戏截图到此处</p>
+                                                <p class="anime-upload-hint">支持 JPG、PNG、GIF 格式，单个文件最大 5MB</p>
+                                                <button type="button" class="btn btn-primary" onclick="document.getElementById('animeFileInput').click()">选择文件</button>
+                                                <input type="file" id="animeFileInput" style="display: none;" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-secondary" onclick="clearAnimeForm()">清空</button>
+                                        <button type="button" class="btn btn-primary" onclick="addAnimeItem()">添加收藏</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="anime-collection-grid" id="animeCollectionGrid">
+                            <div class="anime-collection-empty" id="animeCollectionEmpty">还没有收藏，快来添加第一个吧！</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hobby-card">
+                    <div class="hobby-image">📖</div>
+                    <h3>阅读学习</h3>
+                    <p>热爱阅读各类书籍，特别是经济学、科技和心理学相关内容。通过阅读不断拓展知识面，提高思维深度。</p>
+                </div>
+                
+                <div class="hobby-card">
+                    <div class="hobby-image">🎬</div>
+                    <h3>电影欣赏</h3>
+                    <p>喜欢观看各类电影，从科幻到文艺片都有涉猎。电影是理解人性和社会的好窗口，也是放松身心的好方式。</p>
+                </div>
+                
+                <div class="hobby-card">
+                    <div class="hobby-image">🎵</div>
+                    <h3>音乐聆听</h3>
+                    <p>喜欢多种风格的音乐，从古典到流行都有涉猎。音乐是生活的一部分，能够调节情绪，提高工作和学习效率。</p>
+                </div>
+                
+                <div class="hobby-card">
+                    <div class="hobby-image">💬</div>
+                    <h3>社交交流</h3>
+                    <p>喜欢与朋友交流，参加各种社交活动。通过与不同背景的人交流，拓宽视野，丰富人生经历。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 照片墙部分 -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <h2 class="section-title">照片墙</h2>
+            <p class="section-subtitle">记录美好瞬间，分享精彩生活</p>
+            
+            <div class="gallery-upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📷</div>
+                    <h3>上传照片</h3>
+                    <p>点击或拖拽文件到此处上传</p>
+                    <p class="upload-hint">支持 JPG、PNG、GIF 格式，单个文件最大 5MB，可批量上传</p>
+                    <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">选择文件</button>
+                    <input type="file" id="fileInput" style="display: none;" accept="image/*" multiple>
+                </div>
+            </div>
+            
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-empty" id="galleryEmpty">还没有照片，快来上传第一张吧！</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式部分 -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">联系方式</h2>
+            <p class="section-subtitle">欢迎与我交流，共同探讨学术与生活</p>
+            
+            <div class="contact-content">
+                <div class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>电子邮件</h3>
+                    <a href="mailto:lifeiliu68@gmail.com">lifeiliu68@gmail.com</a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>社交媒体</h3>
+                    <p>微信: wechat_lifeliu</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">🏫</div>
+                    <h3>学校地址</h3>
+                    <p>武汉理工大学<br>湖北省武汉市</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <h3>专业合作</h3>
+                    <p>欢迎数字经济、AI应用等领域的学术交流与合作</p>
+                </div>
+            </div>
+            
+            <div class="contact-message">
+                <p>感谢您访问我的个人网站！如果您对我的研究内容或背景有任何问题，或者希望进行学术交流，欢迎随时联系我。</p>
+                <p>期待与您见面，共同探讨经济学与科技的结合点，一起探索数字经济的新可能。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 留言板部分 -->
+    <section id="guestbook" class="section">
+        <div class="container">
+            <h2 class="section-title">访客留言</h2>
+            <p class="section-subtitle">欢迎留下您的宝贵意见和建议</p>
+            
+            <div class="guestbook-container">
+                <!-- 留言表单 -->
+                <div class="guestbook-form" id="guestbookFormContainer">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--text-color);">发表留言</h3>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="visitorName">您的姓名</label>
+                            <input type="text" id="visitorName" placeholder="请输入您的姓名" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="visitorPhone">联系电话</label>
+                            <input type="tel" id="visitorPhone" placeholder="请输入您的联系电话" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="messageContent">留言内容</label>
+                            <textarea id="messageContent" placeholder="请输入您的留言内容..." maxlength="500" required></textarea>
+                            <div class="character-count">
+                                <span id="charCount">0</span> / 500 字
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" id="submitBtn" class="btn-primary">发布留言</button>
+                            <div id="formMessage" class="form-message"></div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- 留言列表 -->
+                <div class="guestbook-messages">
+                    <div class="messages-header">
+                        <h3>访客留言</h3>
+                        <div class="message-count" id="messageCount">共 0 条留言</div>
+                    </div>
+                    
+                    <div class="message-list" id="messageList">
+                        <div id="loadingMessages" style="text-align: center; padding: 2rem; color: var(--text-light);">
+                            <p>正在加载留言...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="empty-messages" id="emptyMessages" style="display: none;">
+                        <div class="empty-icon">📝</div>
+                        <p>暂无留言，快来发表第一条留言吧！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 刘力菲的个人网站. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- 技能详情模态框 -->
+    <div id="skillDetailModal" class="skill-detail-modal">
+        <div class="skill-detail-content">
+            <div class="skill-detail-header">
+                <div class="skill-detail-title">
+                    <span id="skillDetailIcon"></span>
+                    <h2 id="skillDetailTitle"></h2>
+                </div>
+                <button class="skill-detail-close" onclick="closeSkillDetail()">×</button>
+            </div>
+            <div class="skill-detail-body">
+                <div id="skillDetailDescription" class="skill-detail-description"></div>
+                
+                <div class="skill-project-add-area">
+                    <h3>添加项目展示</h3>
+                    <div class="skill-project-form">
+                        <div class="form-group">
+                            <label for="projectNameInput">项目名称</label>
+                            <input type="text" id="projectNameInput" class="form-input" placeholder="输入项目名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescInput">项目描述</label>
+                            <textarea id="projectDescInput" class="form-textarea" placeholder="简要描述项目内容" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>项目文件</label>
+                            <div class="skill-project-upload-area" id="skillProjectUploadArea">
+                                <div class="skill-project-upload-content">
+                                    <div class="skill-project-upload-icon">📎</div>
+                                    <p>点击选择或拖拽文件</p>
+                                    <p class="skill-project-upload-hint">支持图片、PDF、文档等（Ctrl+V粘贴图片）</p>
+                                    <button type="button" class="btn btn-primary" id="selectFileBtn" onclick="triggerSkillFileSelect(); return false;">
+                                        选择文件
+                                    </button>
+                                    <input type="file" id="skillProjectFileInput" style="display: none;" accept="image/*,.pdf,.doc,.docx,.txt" multiple>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addSkillProject()">添加项目</button>
+                    </div>
+                </div>
+                
+                <div class="skill-projects-section">
+                    <h3>相关项目展示</h3>
+                    <div class="skill-projects-grid" id="skillProjectsGrid">
+                        <div class="skill-projects-empty" id="skillProjectsEmpty">还没有项目展示，快来添加第一个吧！</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // 登录状态检查
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+        });
+
+        // 检查登录状态
+        async function checkLoginStatus() {
+            console.log('开始检查登录状态...');
+            const visitorInfo = localStorage.getItem('visitorInfo');
+            const overlay = document.getElementById('loginCheckOverlay');
+            
+            if (!visitorInfo) {
+                console.log('未找到访客信息，跳转到登录页面');
+                // 未登录，跳转到登录页面
+                window.location.href = '/login.html';
+                return;
+            }
+            
+            try {
+                console.log('找到访客信息，验证token...', visitorInfo);
+                // 显示验证遮罩
+                overlay.style.display = 'flex';
+                
+                const { token, name } = JSON.parse(visitorInfo);
+                
+                // 验证token是否有效
+                const response = await fetch('/api/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token })
+                });
+                
+                if (response.ok) {
+                    console.log('Token验证成功，显示欢迎信息');
+                    // 已登录，显示欢迎信息
+                    const loginLink = document.getElementById('loginLink');
+                    loginLink.textContent = `欢迎, ${name}`;
+                    loginLink.removeAttribute('href');
+                    loginLink.style.cursor = 'pointer';
+                    loginLink.onclick = toggleUserDropdown;
+
+                    // 显示欢迎文本
+                    document.getElementById('welcomeText').textContent = `你好，${name}`;
+
+                    // 隐藏验证遮罩
+                    overlay.style.display = 'none';
+                } else {
+                    console.log('Token验证失败，清除本地存储');
+                    // token无效，清除本地存储并跳转到登录页面
+                    localStorage.removeItem('visitorInfo');
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                console.error('验证登录状态失败:', error);
+                // 清除本地存储并跳转到登录页面
+                localStorage.removeItem('visitorInfo');
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+
+        // 留言板功能
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化留言板功能
+            initializeGuestbook();
+        });
+
+        // 初始化留言板
+        function initializeGuestbook() {
+            console.log('初始化留言板功能...');
+            
+            // 检查登录状态
+            const visitorInfo = localStorage.getItem('visitorInfo');
+            
+            if (!visitorInfo) {
+                console.log('未登录，隐藏留言表单');
+                // 隐藏留言表单
+                const formContainer = document.getElementById('guestbookFormContainer');
+                if (formContainer) {
+                    formContainer.style.display = 'none';
+                }
+                
+                // 显示登录提示
+                const guestbookContainer = document.querySelector('.guestbook-container');
+                if (guestbookContainer) {
+                    const loginPrompt = document.createElement('div');
+                    loginPrompt.className = 'login-prompt';
+                    loginPrompt.innerHTML = `
+                        <div class="login-prompt-content">
+                            <h3>请先登录</h3>
+                            <p>您需要登录后才能发表留言</p>
+                            <a href="/login.html" class="btn-primary">立即登录</a>
+                        </div>
+                    `;
+                    loginPrompt.style.padding = '2rem';
+                    loginPrompt.style.textAlign = 'center';
+                    loginPrompt.style.background = 'rgba(74, 144, 226, 0.1)';
+                    loginPrompt.style.borderRadius = '15px';
+                    loginPrompt.style.marginBottom = '2rem';
+                    
+                    guestbookContainer.insertBefore(loginPrompt, guestbookContainer.firstChild);
+                }
+            } else {
+                console.log('已登录，设置访客信息到表单');
+                try {
+                    const { name, phone } = JSON.parse(visitorInfo);
+                    
+                    // 设置访客信息到表单
+                    const nameInput = document.getElementById('visitorName');
+                    const phoneInput = document.getElementById('visitorPhone');
+                    
+                    if (nameInput) nameInput.value = name || '';
+                    if (phoneInput) phoneInput.value = phone || '';
+                    
+                    // 绑定表单提交事件
+                    const messageForm = document.getElementById('messageForm');
+                    if (messageForm) {
+                        messageForm.addEventListener('submit', handleFormSubmit);
+                    }
+                    
+                    // 绑定文本框字数统计
+                    const messageContent = document.getElementById('messageContent');
+                    if (messageContent) {
+                        messageContent.addEventListener('input', updateCharacterCount);
+                    }
+                } catch (error) {
+                    console.error('获取访客信息失败:', error);
+                }
+            }
+            
+            // 加载留言列表
+            loadMessages();
+        }
+        
+        // 更新字数统计
+        function updateCharacterCount() {
+            const content = document.getElementById('messageContent').value;
+            const charCount = content.length;
+            document.getElementById('charCount').textContent = charCount;
+        }
+        
+        // 处理表单提交
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const visitorInfo = localStorage.getItem('visitorInfo');
+            if (!visitorInfo) {
+                showFormMessage('请先登录', 'error');
+                return;
+            }
+            
+            const { name, phone } = JSON.parse(visitorInfo);
+            const content = document.getElementById('messageContent').value.trim();
+            
+            if (!content) {
+                showFormMessage('请输入留言内容', 'error');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // 显示加载状态
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span>正在发布...';
+            
+            try {
+                console.log('发送留言请求...');
+                console.log('请求数据:', {
+                    visitorName: name,
+                    visitorPhone: phone,
+                    content: content
+                });
+                
+                const response = await fetch('/api/guestbook/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        visitorName: name,
+                        visitorPhone: phone,
+                        content: content
+                    })
+                });
+                
+                console.log('响应状态:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('留言响应:', data);
+                
+                if (data.success) {
+                    // 清空表单
+                    document.getElementById('messageContent').value = '';
+                    updateCharacterCount();
+                    
+                    // 显示成功消息
+                    showFormMessage('留言发布成功！', 'success');
+                    
+                    // 重新加载留言列表
+                    loadMessages();
+                } else {
+                    showFormMessage(data.message || '发布留言失败，请重试', 'error');
+                }
+            } catch (error) {
+                console.error('发布留言错误:', error);
+                console.error('错误详情:', error.message);
+                
+                // 更详细的错误处理
+                if (error.message.includes('NetworkError') || error.message.includes('Failed to fetch')) {
+                    showFormMessage('网络连接失败，请检查网络设置', 'error');
+                } else if (error.message.includes('HTTP错误')) {
+                    showFormMessage('服务器错误：' + error.message, 'error');
+                } else {
+                    showFormMessage('发送留言时发生错误：' + error.message, 'error');
+                }
+            } finally {
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        
+        // 显示表单消息
+        function showFormMessage(text, type) {
+            const messageElement = document.getElementById('formMessage');
+            if (messageElement) {
+                messageElement.textContent = text;
+                messageElement.className = `form-message ${type}`;
+                messageElement.style.display = 'block';
+                
+                // 5秒后自动隐藏
+                setTimeout(() => {
+                    messageElement.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        
+        // 加载留言列表
+        async function loadMessages() {
+            console.log('加载留言列表...');
+            showLoading(true);
+            
+            try {
+                console.log('发送加载留言请求...');
+                const response = await fetch('/api/guestbook/messages');
+                console.log('响应状态:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('留言数据:', data);
+                
+                if (data.success) {
+                    displayMessages(data.messages);
+                    updateMessageCount(data.messages.length);
+                } else {
+                    console.error('加载留言失败:', data.message);
+                    showEmptyMessages();
+                }
+            } catch (error) {
+                console.error('加载留言错误:', error);
+                console.error('错误详情:', error.message);
+                showEmptyMessages();
+                
+                // 显示错误消息给用户
+                const messageList = document.getElementById('messageList');
+                if (messageList) {
+                    messageList.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: var(--primary-color);">
+                            <p>加载留言失败: ${error.message}</p>
+                            <button onclick="loadMessages()" class="btn-primary" style="margin-top: 1rem;">重试</button>
+                        </div>
+                    `;
+                }
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        
+        // 显示留言列表
+        function displayMessages(messages) {
+            const messageList = document.getElementById('messageList');
+            const emptyMessages = document.getElementById('emptyMessages');
+            const loadingMessages = document.getElementById('loadingMessages');
+            
+            if (!messageList) return;
+            
+            // 移除加载提示
+            if (loadingMessages) {
+                loadingMessages.remove();
+            }
+            
+            if (!messages || messages.length === 0) {
+                showEmptyMessages();
+                return;
+            }
+            
+            if (emptyMessages) emptyMessages.style.display = 'none';
+            
+            // 按时间倒序排序（最新的在上面）
+            messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            messageList.innerHTML = '';
+            
+            messages.forEach(message => {
+                const messageCard = createMessageCard(message);
+                messageList.appendChild(messageCard);
+            });
+        }
+        
+        // 创建留言卡片
+        function createMessageCard(message) {
+            const card = document.createElement('div');
+            card.className = 'message-card';
+            
+            const date = new Date(message.createdAt);
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            
+            // 创建头像（使用访客姓名的第一个字符）
+            const avatarChar = message.visitorName ? message.visitorName.charAt(0).toUpperCase() : '访';
+            
+            card.innerHTML = `
+                <div class="message-header">
+                    <div class="message-info">
+                        <div class="message-avatar">${avatarChar}</div>
+                        <div>
+                            <div class="message-name">${message.visitorName || '匿名访客'}</div>
+                            <div class="message-contact">${message.visitorPhone || ''}</div>
+                        </div>
+                    </div>
+                    <div class="message-time">${formattedDate}</div>
+                </div>
+                <div class="message-content">${escapeHtml(message.content)}</div>
+            `;
+            
+            return card;
+        }
+        
+        // 显示空留言提示
+        function showEmptyMessages() {
+            const messageList = document.getElementById('messageList');
+            const emptyMessages = document.getElementById('emptyMessages');
+            const loadingMessages = document.getElementById('loadingMessages');
+            
+            if (!messageList || !emptyMessages) return;
+            
+            // 移除加载提示
+            if (loadingMessages) {
+                loadingMessages.remove();
+            }
+            
+            messageList.innerHTML = '';
+            emptyMessages.style.display = 'block';
+            updateMessageCount(0);
+        }
+        
+        // 更新留言数量
+        function updateMessageCount(count) {
+            const messageCount = document.getElementById('messageCount');
+            if (messageCount) {
+                messageCount.textContent = `共 ${count} 条留言`;
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        
+        // 显示/隐藏加载遮罩
+        function showLoading(show) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = show ? 'flex' : 'none';
+            }
+        }
+
+        // 切换用户下拉菜单
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                // 清除本地存储
+                localStorage.removeItem('visitorInfo');
+                sessionStorage.removeItem('authToken');
+                
+                // 跳转到登录页面
+                window.location.href = '/login.html';
+            }
+        }
+
+        // 点击页面其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const userMenu = document.getElementById('userMenu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (!userMenu.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        
+        // HTML转义
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>
