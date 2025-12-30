@@ -54,7 +54,7 @@ function getVisitors() {
 // 保存访客记录
 function saveVisitors(visitors) {
     try {
-        fs.writeFileSync(VISITORS_FILE, JSON.stringify(visitors, null, 2));
+        // fs.writeFileSync(VISITORS_FILE, JSON.stringify(visitors, null, 2));
         return true;
     } catch (error) {
         console.error('保存访客记录失败:', error);
@@ -493,4 +493,5 @@ if (require.main === module) {
 }
 
 // 导出app用于Vercel和测试
+
 module.exports = app;
